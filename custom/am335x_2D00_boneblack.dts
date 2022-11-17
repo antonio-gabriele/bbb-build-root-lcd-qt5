@@ -1,0 +1,186 @@
+/*
+ * Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+
+&ldo3_reg {
+    regulator-min-microvolt = <1800000>;
+    regulator-max-microvolt = <1800000>;
+    regulator-always-on;
+};
+
+&sgx {
+    status = "okay";
+};
+
+&mmc1 {
+    vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+    vmmc-supply = <&vmmcsd_fixed>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&emmc_pins>;
+    bus-width = <8>;
+    status = "okay";
+    ti,vcc-aux-disable-is-sleep;
+};
+
+/* Common pinmux */
+&am33xx_pinmux {
+    uart0_pins: pinmux_uart0_pins {
+        pinctrl-single,pins = <
+            0x170 (PIN_INPUT_PULLUP | MUX_MODE0)	/* uart0_rxd.uart0_rxd */
+            0x174 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* uart0_txd.uart0_txd */
+        >;
+    };
+    
+    lcd_pins_default: lcd_pins_default {
+        pinctrl-single,pins = <
+            0xa0 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data0.lcd_data0 */
+            0xa4 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data1.lcd_data1 */
+            0xa8 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data2.lcd_data2 */
+            0xac (PIN_OUTPUT | MUX_MODE0)   /* lcd_data3.lcd_data3 */
+            0xb0 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data4.lcd_data4 */
+            0xb4 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data5.lcd_data5 */
+            0xb8 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data6.lcd_data6 */
+            0xbc (PIN_OUTPUT | MUX_MODE0)   /* lcd_data7.lcd_data7 */
+            0xc0 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data8.lcd_data8 */
+            0xc4 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data9.lcd_data9 */
+            0xc8 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data10.lcd_data10 */
+            0xcc (PIN_OUTPUT | MUX_MODE0)   /* lcd_data11.lcd_data11 */
+            0xd0 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data12.lcd_data12 */
+            0xd4 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data13.lcd_data13 */
+            0xd8 (PIN_OUTPUT | MUX_MODE0)   /* lcd_data14.lcd_data14 */
+            0xdc (PIN_OUTPUT | MUX_MODE0)   /* lcd_data15.lcd_data15 */
+            0xe0 (PIN_OUTPUT | MUX_MODE0)   /* lcd_vsync.lcd_vsync */
+            0xe4 (PIN_OUTPUT | MUX_MODE0)   /* lcd_hsync.lcd_hsync */
+            0xe8 (PIN_OUTPUT | MUX_MODE0)   /* lcd_pclk.lcd_pclk */
+            0xec (PIN_OUTPUT | MUX_MODE0)   /* lcd_ac_bias_en.lcd_ac_bias_en */
+        >;
+    };
+
+    lcd_pins_sleep: lcd_pins_sleep {
+        pinctrl-single,pins = <
+            0xa0 (PULL_DISABLE | MUX_MODE7) /* lcd_data0.lcd_data0 */
+            0xa4 (PULL_DISABLE | MUX_MODE7) /* lcd_data1.lcd_data1 */
+            0xa8 (PULL_DISABLE | MUX_MODE7) /* lcd_data2.lcd_data2 */
+            0xac (PULL_DISABLE | MUX_MODE7) /* lcd_data3.lcd_data3 */
+            0xb0 (PULL_DISABLE | MUX_MODE7) /* lcd_data4.lcd_data4 */
+            0xb4 (PULL_DISABLE | MUX_MODE7) /* lcd_data5.lcd_data5 */
+            0xb8 (PULL_DISABLE | MUX_MODE7) /* lcd_data6.lcd_data6 */
+            0xbc (PULL_DISABLE | MUX_MODE7) /* lcd_data7.lcd_data7 */
+            0xc0 (PULL_DISABLE | MUX_MODE7) /* lcd_data8.lcd_data8 */
+            0xc4 (PULL_DISABLE | MUX_MODE7) /* lcd_data9.lcd_data9 */
+            0xc8 (PULL_DISABLE | MUX_MODE7) /* lcd_data10.lcd_data10 */
+            0xcc (PULL_DISABLE | MUX_MODE7) /* lcd_data11.lcd_data11 */
+            0xd0 (PULL_DISABLE | MUX_MODE7) /* lcd_data12.lcd_data12 */
+            0xd4 (PULL_DISABLE | MUX_MODE7) /* lcd_data13.lcd_data13 */
+            0xd8 (PULL_DISABLE | MUX_MODE7) /* lcd_data14.lcd_data14 */
+            0xdc (PULL_DISABLE | MUX_MODE7) /* lcd_data15.lcd_data15 */
+            0xe0 (PIN_INPUT_PULLDOWN | MUX_MODE7)   /* lcd_vsync.lcd_vsync */
+            0xe4 (PIN_INPUT_PULLDOWN | MUX_MODE7)   /* lcd_hsync.lcd_hsync */
+            0xe8 (PIN_INPUT_PULLDOWN | MUX_MODE7)   /* lcd_pclk.lcd_pclk */
+            0xec (PIN_INPUT_PULLDOWN | MUX_MODE7)   /* lcd_ac_bias_en.lcd_ac_bias_en */
+        >;
+    };
+
+        led_bl_pins: gpio_led_bl_pins {
+        pinctrl-single,pins = <
+            0x48  (PIN_OUTPUT | MUX_MODE7)  /* P9_14, gpmc_a[2].GPIO1[18] (backlight control) */
+        >;
+    };
+    lcd_disen_pins: lcd_disen_pins {
+        pinctrl-single,pins = <
+            0x150 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* spi0_sclk.gpio0_2, OUTPUT | MODE7 - AVDD_EN */
+        >;
+    };
+
+};
+
+&lcdc {
+    status = "okay";
+};
+
+/* touch screen */
+&tscadc {
+        status = "okay";
+        tsc {
+                ti,wires = <4>;
+                ti,x-plate-resistance = <200>;
+                ti,coordinate-readouts = <5>;
+                ti,wire-config = <0x00 0x11 0x22 0x33>;
+                        /*ti,charge-delay = <0xb000>;*/
+        };
+
+        adc {
+            ti,adc-channels = <4 5 6 7>;
+        };
+    };
+
+/* 7.0" 4D systems LCD */
+/ {
+    panel {
+        compatible = "ti,tilcdc,panel";
+        pinctrl-names = "default", "sleep";
+        pinctrl-0 = <&lcd_pins_default &lcd_disen_pins>;
+        pinctrl-1 = <&lcd_pins_sleep>;
+        status = "okay";
+        panel-info {
+            ac-bias           = <255>;
+            ac-bias-intrpt    = <0>;
+            dma-burst-sz      = <16>;
+            bpp               = <16>;
+            fdd               = <0x80>;
+            sync-edge         = <0>;
+            sync-ctrl         = <1>;
+            raster-order      = <0>;
+            fifo-th           = <0>;
+        };
+        display-timings {
+            800x480 {
+                clock-frequency = <30000000>;
+                hactive         = <800>;
+                vactive         = <480>;
+                hback-porch     = <40>;
+                hfront-porch    = <40>; 
+                hsync-len       = <48>;
+                vback-porch     = <30>;
+                vfront-porch    = <13>;
+                vsync-len       = <3>;
+                hsync-active    = <0>;
+                vsync-active    = <0>;
+                de-active = <1>;
+                pixelclk-active = <0>;
+            };
+        };
+    };
+
+/* backlight */
+        backlight {
+        status = "okay";
+        compatible = "gpio-leds";
+        pinctrl-names = "default";
+                pinctrl-0 = <&led_bl_pins>;
+        backlight {
+            label = "backlight";
+            gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>;
+            default-state = "on";
+        };
+    };
+
+};
+
+&uart0 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&uart0_pins>;
+    status = "okay";
+};
+
